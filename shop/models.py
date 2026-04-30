@@ -6,6 +6,7 @@ class Category(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
 
     class Meta:
+        ordering = ['name']
         verbose_name_plural = 'categories'
 
     def __str__(self):
@@ -23,6 +24,14 @@ class Product(models.Model):
     stock = models.PositiveIntegerField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['name']
+        indexes = [
+            models.Index(fields=['id', 'slug']),
+            models.Index(fields=['name']),
+            models.Index(fields=['-created']),
+        ]
 
     def __str__(self):
         return self.name
