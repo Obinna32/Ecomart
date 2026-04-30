@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{product.name}}</title>
+    <style>
+        body{
+            font-family: sans-serif;
+            margin: 40px;
+            background: #f4f4f4;
+        }
+        .container{
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            display: flex;
+            gap: 40px;
+        }
+        .image-section img{
+            max-width: 400px;
+            border-radius: 8px;
+        }
+        .info-section{
+            max-width: 500px;
+        }
+        .price{
+            font-size: 1.5rem;
+            color: #2ecc71;
+            font-weight: bold;
+        }
+        .btn-back{
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class = "image-section">
+            {% if product.image %}
+                <img src="{{product.image.url}}" alt="{{product.name}}">
+            {% endif %}
+        </div>
+
+        <div class ="info-section">
+            <h1>{{ product.name }}</h1>
+            <p><strong>Category: </strong> {{product.category.name}}</p>
+            <p class="price">N{{product.price}}</p>
+            <p>{{product.description|linebreaks}}</p>
+
+            <p>
+                {% if product.stock > 0 %}
+                    <span style="color: green;">In Stock ({{ product.stock }} left)</span>
+                {% else %}
+                    <span style="color:red;">Out of Stock</span>
+                {% endif %}
+            </p>
+
+            <a href= "{% url "shop:product_list" %}" class="btn-back"> Back to Shop</a>
+        </div>
+
+    </div>
+</body>
+</html>
