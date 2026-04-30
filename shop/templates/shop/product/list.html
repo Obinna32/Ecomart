@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if category %}{{category.name}}{%else%}Products{% endif %}</title>
+    <style>
+        body{
+            font-family: sans-serif;
+            background-color: #f8f9fa;
+            margin: 40px;
+        }
+        .product-grid{
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+            gap: 20px;
+        }
+        .card{
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .card img{
+            max-width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .price {
+            color: #2ecc71;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>EcoMart Store</h1>
+
+    <div style="margin-bottom: 20px;">
+        <strong>Categories: </strong>
+        <a href="{% url 'shop:product_list' %}">All</a> |
+        {% for c in categories %}
+            <a href="{% url 'shop:product_list_by_category' c.slug %}">{{ c.name }}</a> |
+        {% endfor %}
+    </div>
+
+    <div class="product-grid">
+        {% for product in products %}
+            <div class="card">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% endif %}
+                <h3>{{ product.name }}</h3>
+                <p class="price">N{{ product.price }}</p>
+            </div>
+        {% empty %}
+            <p>No products found in this category.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
