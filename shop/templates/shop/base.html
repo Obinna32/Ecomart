@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}EcoMart{% endblock %}</title>
+        <link rel="stylesheet" href ="{% static "shop/css/style.css" %}"
+    </head>
+    <body>
+        <header>
+            <div class="nav-container">
+                <a href= "{% url "shop:product_list" %}" class="logo">EcoMart</a>
+                <nav>
+                    <a href="{% url "shop:product_list" %}">Shop All</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class ="container">
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <footer>
+            <p>&copy; 2026 EcoMart - Built by Obinna32 with Django </p>
+        </footer>
+    </body>
+</html>
