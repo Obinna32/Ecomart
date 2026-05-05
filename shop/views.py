@@ -56,3 +56,15 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form':form})
+
+from .cart import Cart
+
+def cart_add(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Product, id=product_id)
+    cart.add(product=product, quantity=1)
+    return redirect('shop:cart_detail')
+
+def cart_detail(request):
+    cart = Cart(request)
+    return render(request, 'shop/cart/detail.html', {'cart': cart})
