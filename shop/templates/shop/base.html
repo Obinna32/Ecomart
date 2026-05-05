@@ -5,14 +5,25 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}EcoMart{% endblock %}</title>
-        <link rel="stylesheet" href ="{% static "shop/css/style.css" %}"
+        <link rel="stylesheet" href ="{% static "shop/css/style.css" %}">
     </head>
     <body>
         <header>
             <div class="nav-container">
                 <a href= "{% url "shop:product_list" %}" class="logo">EcoMart</a>
                 <nav>
-                    <a href="{% url "shop:product_list" %}">Shop All</a>
+                    <a href="{% url 'shop:product_list' %}" style="color: white; text-decoration: none; margin-right: 20px;">Shop All</a>
+                    
+                    {% if user.is_authenticated %}
+                        <span style="margin-right: 15px;">Hi, <strong>{{ user.username }}</strong></span>
+                        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="background: none; border: none; color: #e74c3c; cursor: pointer; font-weight: bold;">Logout</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}" style="color: white; text-decoration: none; margin-right: 15px;">Login</a>
+                        <a href="{% url 'shop:register' %}" style="color: #2ecc71; text-decoration: none; font-weight: bold;">Register</a>
+                    {% endif %}
                 </nav>
             </div>
         </header>

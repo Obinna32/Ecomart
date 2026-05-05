@@ -41,3 +41,18 @@ def product_list(request, category_slug=None):
         'products': products,
         'query': query
     })
+
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login,logout
+from django.shortcuts import redirect, render
+
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('shop:product_list')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {'form':form})

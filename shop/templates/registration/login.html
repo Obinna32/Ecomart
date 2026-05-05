@@ -1,0 +1,17 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 50px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <h1>Login to EcoMart</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn" style="width: 100%; border: none; cursor: pointer;">Login</button>
+    </form>
+    <p style="margin-top: 20px; text-align: center;">
+        Don't have an account? <a href="{% url 'shop:register' %}" style="color: #2ecc71;">Register here</a>
+    </p>
+</div>
+{% endblock %}
