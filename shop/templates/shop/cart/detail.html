@@ -12,6 +12,7 @@
                 <th style="padding:15px;">Quantity</th>
                 <th style="padding: 15px">Unit Price</th>
                 <th style="padding: 15px;">Total</th>
+                <th style="padding: 15px;">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +28,14 @@
                         <td style="padding:15px;">{{item.quantity}}</td>
                         <td style="padding:15px;">N{{item.price}}</td>
                         <td style="padding:15px; font-weight: bold">N{{item.total_price}}</td>
+                        <td style="padding: 15px;">
+                            <form action="{% url 'shop:cart_remove' product.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" style="background: none; border: none; color: #e74c3c; cursor: pointer; text-decoration: underline; font-size: 0.9rem;">
+                                    Remove
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 {% endwith %}
             {% empty%}
