@@ -74,3 +74,28 @@ def cart_remove(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
     return redirect('shop:cart_detail')
+
+from .forms import OrderCreateForm
+from .models import OrderItem
+
+def order_create(request):
+    cart = Cart(request)
+    if request.method =="POST":
+        form = OrderCreateForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            if request.user.is_authenticated:
+                order.user = request.user
+            order.save()
+            for item in cart:
+                OrderItem.objects.create(order=order,
+                                         product=item['product'],
+                                         price = item['price'],
+                                         quantity = item['quantity'])
+            cart.clear()
+            return render(request, 'shop/order/created.html', {'order': order})
+        else:
+            print(form.errors)
+    else:
+        form = OrderCreateForm()
+    return render(request, 'shop/order/create.html', {'cart': cart, 'form': form})

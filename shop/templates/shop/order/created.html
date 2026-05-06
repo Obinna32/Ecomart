@@ -1,0 +1,12 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Thank You, {{user.username}}{% endblock title %}
+
+{% block content %}
+    <div>
+        <h1>Success! 🎉</h1>
+        <p>Your order #{{order.id}} has been placed successfully.</p>
+        <p>We will contact you at {{order.email}} for delivery details.</p>
+        <a href="{% url "shop:product_list" %}" class="btn">Continue Shopping</a>
+    </div>
+{% endblock content %}
